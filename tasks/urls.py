@@ -1,8 +1,10 @@
-from django.views.generic import TemplateView
+
 from django.urls import path
+
+from .views import ListTasksView
 
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="tasks/lists.html"), name="tasks.index"),
 
+    path("", ListTasksView.as_view(), name="tasks.list")
 ]
