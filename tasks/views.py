@@ -6,7 +6,7 @@ class ListTasksView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ListTasksView, self).get_context_data(**kwargs)
-        context['tasks'] = [
+        context["tasks"] = [
             {
                 "id": 1,
                 "title": "Task 1",
@@ -15,10 +15,6 @@ class ListTasksView(TemplateView):
                 "id": 2,
                 "title": "Task 2",
             },
-            {
-                "id": 3,
-                "title": "Task 3",
-                "done": True
-            }
+            {"id": 3, "title": "Task 3", "done": True},
         ]
         return context
