@@ -6,13 +6,13 @@
 
     
     <label>New task</label>
-    <input class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
+    <input id="task-search" class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
     
     <h1>tasks list</h1>
 
     <ul class="list-group">
         {% for task in tasks %}
-        <li class="list-group-item{% if task.done %} active{% endif %}">#{{ task.id}} - {{ task.title }}</li>
+        <li class="list-group-item task-list{% if task.done %} active{% endif %}">#{{ task.id}} - {{ task.title }}</li>
         {% endfor %}
     </ul>
 
@@ -21,4 +21,18 @@
 
 {% endblock content %}
 
+{% block js %}
+<script type="text/javascript">
+    $( "#task-search" ).focus(function() {
+        alert( "Click!!!" );
+    });
 
+    $(document).ready(function(){
+        $(".task-list").mouseenter(function(){
+            $(this).addClass("text-bold");
+        }).mouseleave(function(){
+            $(this).removeClass("text-bold");
+        });
+    });
+</script>
+{% endblock js %}

@@ -12,19 +12,23 @@
 
     <!-- Basic styles for this template::: bootstrap-fs -->
     {% block css %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" />
+    <!-- Custom local style -->
+    <link rel="stylesheet" href="{% static 'theme/css/style.css' %}" />
     {% endblock css %}
 
   </head>
 
   <body>
-    <!--  USE THE extrabody_top BLOCK to add content here -->
  
-    <!-- Basic JS for this template::: bootstrap-fs -->
-    {% block js %}
+    <!-- Basic JS -->
+    {% block jstop %}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    {% endblock js %}
+    {% endblock jstop %}
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">My todo list</a>
@@ -34,9 +38,12 @@
     </nav>
 
     <div class="container">
-        {% block content %}
-        {% endblock content %}
+      {% block content %}
+      {% endblock content %}
     </div>
+
+    {% block js %}
+    {% endblock js %}
 
   </body>
 
