@@ -54,6 +54,7 @@ if DEBUG:
 LOCAL_APPS = [
     "theme.apps.ThemeConfig",
     "tasks.apps.TasksConfig",
+    "homepage.apps.HomepageConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
