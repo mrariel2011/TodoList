@@ -17,6 +17,7 @@ class ListTasksView(TemplateView):
         new_item = Task(
             title=request.POST["title"],
             description=request.POST["description"],
+            due_to=request.POST["due_to"],
         )
         new_item.save()
         messages.success(request, ("Task Adicionado!"))
