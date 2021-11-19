@@ -10,7 +10,22 @@
     
     <label>New task</label>
     <input id="task-search" class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
-    
+
+    <!-- Add Task -->
+    <br>
+    <form action="addTask/" method = "post">{% csrf_token %}
+        <label for="addTask">Title:  </label> 
+            <input id="addtask" type="text" name="addtask" value="{{ current_name }}" placeholder="Insert task title..."> 
+        <br>
+        <label for="addTask">Desc: </label>   
+            <textarea class="form-control" id="addtask" rows="3" placeholder="Insert task desc..."></textarea>
+        
+        <br>
+        <input type="submit" value="Add Task">
+        
+    </form> 
+    <!-- Add Task End -->
+
     <h1>tasks list</h1>
 
     <ul class="list-group">
