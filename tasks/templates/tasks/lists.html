@@ -5,33 +5,81 @@
 {% block content %}
     <a href="/">    Return to Home </a>
 
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-warning alert-dismissable" role="alert">
+            <button class ='close' data-dismiss='alert'>
+                <small><sup>x</sup></small>
+            </button>
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% endif %}
+
 <section>
-
     
-    <label>New task</label>
-    <input id="task-search" class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
-
+    
     <!-- Add Task -->
+    Add Task 
     <br>
-    <form action="addTask/" method = "post">{% csrf_token %}
-        <label for="title">Title:  </label> 
-            <input id="title" type="text" name="title" value="{{ current_name }}" placeholder="Insert task title..."> 
-        <br>
-        <label for="description">Desc: </label>   
-            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Insert task desc..."></textarea>
-        <br>
-        <input type="submit" value="Add Task">
-        
-    </form> 
+            <form action="addTask/" method = "post">{% csrf_token %}
+                <input id="title" type="text" name="title" value="{{ current_name }}" placeholder="Insert task title..."> 
+                <br><br>
+                <textarea class="form-control" id="description" name="description" rows="3" placeholder="Insert task desc..."></textarea>
+                <br>
+                <input type="submit" value="Add Task">  
+            </form> 
+    
     <!-- Add Task End -->
 
-    <h1>tasks list</h1>
+            <h1>Tasks list</h1>
+                <ul class="list-group">
+                <div class="table-responsive">
+                    <table id="list" class="table table-bordered border-primary" style='margin-left: auto; margin-right: auto;'>
+                    <thead style="text-align:center">
+                        <td> <input id="search" type="text" name="search" value= "" placeholder="Filter ID" style="max-width:50px;">  </td>
+                        <td> <input id="search" type="text" name="search" value= "" placeholder="Filter Title" style="max-width:100px;"> </td>
+                        <td>  </td>
+                        <td> <input id="search" type="text" name="search" value= "" placeholder="Filter Done" style="max-width:50px;"> </td>
+                        <td> </td>
+                        <td> </td>
+                    
+                    <tr class="table table-primary ">
+                        <td> #ID  </td>
+                        <td> Task </td>
+                        <td> Description </td>
+                        <td> Date </td>
+                        <td> Done? </td>
+                        <td>  </td>
+                    </tr>
+                    </thead>
 
-    <ul class="list-group">
-        {% for task in tasks %}
-        <li class="list-group-item task-list{% if task.done %} active{% endif %}">#{{ task.id | apnumber }} - {{ task.title }}</li>
-        {% endfor %}
-    </ul>
+                    {% for task in tasks %}
+                        {% if task.done %}
+                            <tr class="task-list{% if task.done %} active{% endif %}" >
+                        {% else %}
+                            <tr class="table-active task-list{% if task.done %} active{% endif %}">
+                        {% endif %}
+
+                        <td style="text-align:center"> #{{ task.id }}  </td>
+                        <td> <div style="width:100%;  max-width: 300px; overflow:auto; text-align:center; margin-left: auto; margin-right: auto;"> 
+                            {{ task.title }} </div></td>
+                        <td> <div style="width:100%;  max-width: 300px; overflow:auto; text-align:center; margin-left: auto; margin-right: auto;"> 
+                            {{ task.description}}  </div></td>
+                        <td style="text-align:center"> {{task.due_to}} </td>
+                        <td style="text-align:center"><center> <a href='{% url 'doneTask' task.id %}'> 
+    
+                        {% if task.done %} Undone {% else %} Done {% endif %}
+                            
+                        </a></center></td>
+                        <td><center> <a href='{% url 'deleteTask' task.id %}'> Delete </a></center></td>    
+                                                
+                        </tr>
+                    {% endfor %}
+                    </table>
+                </div>
+                </ul>
+            
 
 </section>
 

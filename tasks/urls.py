@@ -9,4 +9,6 @@ from .views import ListTasksView
 urlpatterns = [
     path("", ListTasksView.as_view(), name="tasks.list"),
     path("addTask/", ListTasksView.Add_Task),
+    path("deleteTask/<task_id>", ListTasksView.Delete_Task, name="deleteTask"),
+    path("doneTask/<task_id>", ListTasksView.Done_Task, name="doneTask"),
 ]
