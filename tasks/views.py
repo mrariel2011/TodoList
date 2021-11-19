@@ -8,7 +8,7 @@ from django.contrib import messages
 class ListTasksView(TemplateView):
     template_name = "tasks/lists.html"
 
-    def get_context_data(self, search, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super(ListTasksView, self).get_context_data(**kwargs)
         context["tasks"] = Task.objects.order_by("-id")
         return context
