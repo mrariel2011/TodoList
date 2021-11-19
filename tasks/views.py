@@ -14,7 +14,8 @@ class ListTasksView(TemplateView):
 
     def Add_Task(request):
         new_item = Task(
-            title=request.POST["title"], description=request.POST["description"]
+            title=request.POST["title"],
+            description=request.POST["description"],
         )
         new_item.save()
-        return HttpResponseRedirect("/task/")
+        return HttpResponseRedirect("/tasks/")

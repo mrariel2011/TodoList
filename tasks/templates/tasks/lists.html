@@ -14,12 +14,11 @@
     <!-- Add Task -->
     <br>
     <form action="addTask/" method = "post">{% csrf_token %}
-        <label for="addTask">Title:  </label> 
-            <input id="addtask" type="text" name="addtask" value="{{ current_name }}" placeholder="Insert task title..."> 
+        <label for="title">Title:  </label> 
+            <input id="title" type="text" name="title" value="{{ current_name }}" placeholder="Insert task title..."> 
         <br>
-        <label for="addTask">Desc: </label>   
-            <textarea class="form-control" id="addtask" rows="3" placeholder="Insert task desc..."></textarea>
-        
+        <label for="description">Desc: </label>   
+            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Insert task desc..."></textarea>
         <br>
         <input type="submit" value="Add Task">
         

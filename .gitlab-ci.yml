@@ -1,0 +1,212 @@
+stages:
+  - build
+  - lint
+  - test
+  - release
+  - deploy
+
+variables:
+  DOCKER_REGISTRY: 681920228194.dkr.ecr.us-west-2.amazonaws.com
+  BACKEND_IMAGE_TAG: $DOCKER_REGISTRY/wave/backend:${CI_COMMIT_SHORT_SHA}
+  BACKEND_IMAGE_ENV_TAG: $DOCKER_REGISTRY/wave/backend:${CI_COMMIT_REF_SLUG}
+  SANDBOX_IMAGE: $DOCKER_REGISTRY/wave/sandbox:${CI_COMMIT_SHORT_SHA}
+  SANDBOX_IMAGE_RELEASE: $DOCKER_REGISTRY/wave/sandbox:latest
+  LOGGER_IMAGE: $DOCKER_REGISTRY/waves/logger:${CI_COMMIT_SHORT_SHA}
+  LOGGER_IMAGE_RELEASE: $DOCKER_REGISTRY/waves/logger:${CI_COMMIT_REF_SLUG}
+
+build_backend:
+  stage: build
+  tags: [shell]
+  script:
+    - aws ecr get-login --no-include-email --region us-west-2 | bash
+    - docker build -t $BACKEND_IMAGE_TAG --target production  ./backend
+    - echo "Sending TAG to ECR:$BACKEND_IMAGE_TAG"
+    - docker push $BACKEND_IMAGE_TAG
+
+build_logger:
+  stage: build
+  tags: [shell]
+  script:
+    - aws ecr get-login --no-include-email --region us-west-2 | bash
+    - docker build -t $LOGGER_IMAGE ./logger
+    - docker push $LOGGER_IMAGE
+
+release_backend:
+  stage: release
+  tags: [shell]
+  only: [development, master, autoscaling, upgrade_celery]
+  script:
+    - aws ecr get-login --no-include-email --region us-west-2 | bash
+    - docker pull $BACKEND_IMAGE_TAG
+    - docker tag $BACKEND_IMAGE_TAG $BACKEND_IMAGE_ENV_TAG
+    - echo "Sending TAG to ECR:$BACKEND_IMAGE_ENV_TAG"
+    - docker push $BACKEND_IMAGE_ENV_TAG
+
+release_logger:
+  stage: release
+  tags: [shell]
+  only: [development, master, autoscaling]
+  when: manual
+  script:
+    - aws ecr get-login --no-include-email --region us-west-2 | bash
+    - docker pull $LOGGER_IMAGE
+    - docker tag $LOGGER_IMAGE $LOGGER_IMAGE_RELEASE
+    - docker push $LOGGER_IMAGE_RELEASE
+
+python_lint:
+  stage: lint
+  tags: [shell]
+  allow_failure: yes
+  script:
+    - aws ecr get-login --no-include-email --region us-west-2 | bash
+    - docker pull $BACKEND_IMAGE_TAG
+    - docker run --rm $BACKEND_IMAGE_TAG flake8
+
+python_test:
+  stage: test
+  tags: [shell]
+  coverage: '/TOTAL.*\s+(\d+%)$/'
+  script:
+    - aws ecr get-login --no-include-email --region us-west-2 | bash
+    - docker pull $BACKEND_IMAGE_TAG
+    - ./backend/scripts/ci_run_tests.sh
+
+pages:
+  stage: deploy
+  tags: [docker]
+  when: manual
+  image:
+    name: unisec/vuepress
+    entrypoint: ["/bin/sh", "-c"]
+  artifacts:
+    paths:
+      - public
+  script:
+    - cd docs
+    - vuepress build -d ../public
+
+dev_backend_deploy:
+  stage: deploy
+  only: [development]
+  image: spacetimeanalytics/deploytools
+  tags: [docker]
+  environment:
+    name: development
+  variables:
+    DEPLOY_TAG: development
+  script:
+    - cd devops/ansible/
+    - echo -n $WAVESVAULT > ~/wavesvault
+    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts/development --vault-password-file ~/wavesvault --tags backend playbook.yml
+
+bayer_backend_deploy:
+  stage: deploy
+  only: [master]
+  when: manual
+  image: spacetimeanalytics/deploytools
+  tags: [docker]
+  environment:
+    name: bayer
+  variables:
+    DEPLOY_TAG: master
+  script:
+    - cd devops/ansible/
+    - echo -n $WAVESVAULT > ~/wavesvault
+    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts/bayer --vault-password-file ~/wavesvault --tags backend playbook.yml
+
+cana_backend_deploy:
+  stage: deploy
+  only: [development, autoscaling-bug-worker]
+  when: manual
+  image: spacetimeanalytics/deploytools
+  tags: [docker]
+  environment:
+    name: development
+  variables:
+    DEPLOY_TAG: development
+  script:
+    - cd devops/ansible/
+    - echo -n $WAVESVAULT > ~/wavesvault
+    - export CI_COMMIT_DATE=$(git show -s --pretty='format:%h %ci %s (%an)' --no-color $CI_COMMIT_SHORT_SHA)
+    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts/cana --vault-password-file ~/wavesvault --tags backend playbook.yml
+
+t1_backend_deploy:
+  stage: deploy
+  only: [development]
+  when: manual
+  image: spacetimeanalytics/deploytools
+  tags: [docker]
+  environment:
+    name: development
+  variables:
+    DEPLOY_TAG: development
+  script:
+    - cd devops/ansible/
+    - echo -n $WAVESVAULT > ~/wavesvault
+    - export CI_COMMIT_DATE=$(git show -s --pretty='format:%h %ci %s (%an)' --no-color $CI_COMMIT_SHORT_SHA)
+    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts/wavest1 --vault-password-file ~/wavesvault --tags backend playbook.yml
+
+dev_worker_deploy:
+  stage: deploy
+  only: [development, master, autoscaling, upgrade_celery]
+  when: manual
+  image: spacetimeanalytics/deploytools
+  tags: [docker]
+  environment:
+    name: development
+  script:
+    - cd devops/ansible/
+    - echo -n $WAVESVAULT > ~/wavesvault
+    - ANSIBLE_HOST_KEY_CHECKING=False DEPLOY_TAG=development ansible-playbook -i hosts/development --vault-password-file ~/wavesvault --tags worker playbook.yml
+
+cana_worker_deploy:
+  stage: deploy
+  only: [development, master, autoscaling-bug-worker]
+  when: manual
+  image: spacetimeanalytics/deploytools
+  tags: [docker]
+  environment:
+    name: cana
+  script:
+    - cd devops/ansible/
+    - echo -n $WAVESVAULT > ~/wavesvault
+    - ANSIBLE_HOST_KEY_CHECKING=False DEPLOY_TAG=development ansible-playbook -i hosts/cana --vault-password-file ~/wavesvault --tags worker playbook.yml
+
+bayer_worker_deploy:
+  stage: deploy
+  only: [development, master, autoscaling]
+  when: manual
+  image: spacetimeanalytics/deploytools
+  tags: [docker]
+  environment:
+    name: bayer
+  script:
+    - cd devops/ansible/
+    - echo -n $WAVESVAULT > ~/wavesvault
+    - ANSIBLE_HOST_KEY_CHECKING=False DEPLOY_TAG=master ansible-playbook -i hosts/bayer --vault-password-file ~/wavesvault --tags worker playbook.yml
+
+dev_logger_deploy:
+  stage: deploy
+  only: [development, master, autoscaling]
+  when: manual
+  image: spacetimeanalytics/deploytools
+  tags: [docker]
+  environment:
+    name: development
+  script:
+    - cd devops/ansible/
+    - echo -n $WAVESVAULT > ~/wavesvault
+    - ANSIBLE_HOST_KEY_CHECKING=False DEPLOY_TAG=latest ansible-playbook -i hosts/development --vault-password-file ~/wavesvault --tags logger playbook.yml
+
+bayer_logger_deploy:
+  stage: deploy
+  only: [development, master, autoscaling]
+  when: manual
+  image: spacetimeanalytics/deploytools
+  tags: [docker]
+  environment:
+    name: bayer
+  script:
+    - cd devops/ansible/
+    - echo -n $WAVESVAULT > ~/wavesvault
+    - ANSIBLE_HOST_KEY_CHECKING=False DEPLOY_TAG=latest ansible-playbook -i hosts/bayer --vault-password-file ~/wavesvault --tags logger playbook.yml
