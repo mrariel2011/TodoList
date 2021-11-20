@@ -3,8 +3,8 @@
 {% load humanize %}
 
 {% block content %}
-    
-    <!-- Modal -->
+
+    <!-- Modal New Task -->
     <div class="modal fade" id="addtaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -38,10 +38,31 @@
     </div>
     </div>
 
-    
-
-    
-
+    <!-- Modal Edit Task -->
+    <div class="modal fade" id="edittaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel" style="text-align:center;">Edit Task</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            <!-- Edit Task -->
+            {{task.id}}
+            <form action="editTask/{{task.id}}" method = "post" id='editTask'>{% csrf_token %}
+                New Title: <input id="title" type="text" name="title" value="{{ task.title }}"> 
+                <br><br>
+                <center><input type="submit" value="Edit Task" class="btn btn-default" style="background-color: black; color: white">  </center>
+            </form>
+            <!-- Edit Task End -->
+    </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color: red; color: white">Close</button>
+        </div>
+        </div>
+    </div>
+    </div>
+                        
     <!-- Message -->
     {% if messages %}
             {% for message in messages %}
@@ -54,6 +75,7 @@
             {% endfor %}
             {% endif %}
     <!-- Message End -->
+
 <section>
 
             <h1>
@@ -82,7 +104,7 @@
                         <td> </td>-->
                     <tr class="table table-primary ">
                         <td> #ID/Edit  </td>
-                        <td> Task </td>
+                        <td> Title </td>
                         <td> Description </td>
                         <td> Date </td>
                         <td> Done? </td>
@@ -97,9 +119,9 @@
                         {% endif %}
 
                         <td style="text-align:center"> 
-                            <button name='openEdit' data-toggle="modal" data-target="#edittaskModal" data-whatever="{{task.title}}"> 
+                            <a href='#'name='openEdit' data-toggle="modal" data-target="#edittaskModal" data-whatever="{{task.title}}"> 
                                 #{{ task.id }}  
-                            </button>
+                            </a>
                         </td>
 
                         <td> 
@@ -121,30 +143,6 @@
                                                 
                         </tr>
 
-                        <div class="modal fade" id="edittaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title" id="myModalLabel" style="text-align:center;">New Task</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                </div>
-                                <div class="modal-body">
-
-                                    <!-- Edit Task -->
-                                        <form action="editTask/{{task.id}}" method = "post" id='editTask'>{% csrf_token %}
-                                            New Task Title: <input id="title" type="text" name="title" value="{{ task.title }}"> 
-                                            <br><br>
-                                            <center><input type="submit" value="Edit Task" class="btn btn-default" style="background-color: black; color: white">  </center>
-                                        </form>
-                                    <!-- Edit Task End -->
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color: red; color: white">Close</button>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
                     {% endfor %}
                     </table>
                 </div>
