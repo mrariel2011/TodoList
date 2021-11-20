@@ -11,4 +11,5 @@ urlpatterns = [
     path("addTask/", ListTasksView.Add_Task),
     path("deleteTask/<task_id>", ListTasksView.Delete_Task, name="deleteTask"),
     path("doneTask/<task_id>", ListTasksView.Done_Task, name="doneTask"),
+    path("editTask/<task_id>", ListTasksView.Edit_Task, name="editTask"),
 ]

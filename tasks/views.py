@@ -26,12 +26,20 @@ class ListTasksView(TemplateView):
     def Delete_Task(request, task_id):
         item = Task.objects.get(pk=task_id)
         item.delete()
-        messages.success(request, ("Task foi deletado!"))
+        messages.success(request, ("Task deletado!"))
         return HttpResponseRedirect("/tasks/")
 
     def Done_Task(request, task_id):
         item = Task.objects.get(pk=task_id)
         item.done = not item.done
         item.save()
-        messages.success(request, ("Task foi Atualizado!"))
+        messages.success(request, ("Task Atualizado!"))
+        return HttpResponseRedirect("/tasks/")
+
+    def Edit_Task(request, task_id):
+        item = Task.objects.get(pk=task_id)
+        new_value = request.POST.get("title")
+        item = Task(task_id, new_value)
+        item.save()
+        messages.success(request, ("Task Editado!"))
         return HttpResponseRedirect("/tasks/")
