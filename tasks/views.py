@@ -1,10 +1,8 @@
-from django.http.response import HttpResponse
 from django.views.generic import TemplateView
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .models import Task
 from django.contrib import messages
-from django.http.response import JsonResponse
 
 
 class ListTasksView(TemplateView):
@@ -41,7 +39,6 @@ class ListTasksView(TemplateView):
     def Edit_Task(request, task_id):
         if request.method == "POST":
             item = Task.objects.get(pk=task_id)
-            new_value = request.POST.get("title")
             item = Task(
                 task_id,
                 request.POST.get("title"),
