@@ -52,11 +52,11 @@
     <!-- Message End -->
 
 <section>
-
+            
             <h1>
             Tasks list
             <!-- Button trigger modal addTask -->
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addtaskModal" id="reset"
+            <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#addtaskModal" id="reset"
                 style="background-color: green; color: white">
             +
             </button>
@@ -84,9 +84,9 @@
                         {% endif %}
 
                         <td style="text-align:center"> 
-                            <a href='{% url 'editTask' task.id %}'>
-                                #{{ task.id }}  
-                            </button>
+                            <a href='{% url 'editTask' task.id %}'> <p class='btn btn-primary'>
+                                #{{ task.id }}  </p>
+                            <a>
                         </td>
 
                         <td> 
@@ -99,13 +99,13 @@
                             {{ task.description}}  </div></td>
                         
                         <td style="text-align:center"> {{task.due_to}} </td>
-                        <td style="text-align:center"><center> <a href='{% url 'doneTask' task.id %}'> 
-    
-                        {% if task.done %} Undone {% else %} Done {% endif %}
-                            
+                        <td style="text-align:center">
+                         <a href='{% url 'doneTask' task.id %}'>
+                            {% if task.done %} <p class='btn btn-secondary'> Undone </p> {% else %} <p class='btn btn-primary'> Done </p> {% endif %}
                         </a></center></td>
-                        <td><center> <a href='{% url 'deleteTask' task.id %}'> Delete </a></center></td>    
-                                                
+                        <td><center> <a href='{% url 'deleteTask' task.id %}' class='btn btn-primary'> Delete </a></center></td>
+
+
                         </tr>
 
                     {% endfor %}
@@ -133,5 +133,15 @@
     $('#reset').click(function() {
         $("#addTask")[0].reset();
     })
+
+    // Get the modal
+    var modal = document.getElementById('id01');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    }
 </script>
 {% endblock js %}
