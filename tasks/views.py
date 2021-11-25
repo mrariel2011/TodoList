@@ -1,8 +1,22 @@
 from django.views.generic import TemplateView
+from django.views.generic.edit import UpdateView
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from .models import Task
 from django.contrib import messages
+from django.shortcuts import reverse
+
+from .models import Task
+from .forms import TaskModelForm
+
+
+class TaskUpdateView(UpdateView):
+    model = Task
+    form_class = TaskModelForm
+    context_object_name = "task"
+    template_name = "tasks/task_update.html"
+
+    def get_success_url(self):
+        return reverse("tasks.list")
 
 
 class ListTasksView(TemplateView):

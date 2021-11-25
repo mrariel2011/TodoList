@@ -4,40 +4,8 @@
 
 {% block content %}
 
-    <!-- Modal New Task -->
-    <div class="modal fade" id="addtaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title" id="myModalLabel" style="text-align:center;">New Task</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
-        <div class="modal-body">
+    {% include 'tasks/insert.html' %}
 
-            <!-- Add Task -->
-            <form action="addTask/" method = "post" id='addTask'>{% csrf_token %}
-                Task title:
-                <input id="title" type="text" name="title" placeholder="Insert task title..."> 
-                <br><br>
-                Task description:
-                <textarea class="form-control" id="description" name="description" rows="3" placeholder="Insert task desc..."></textarea>
-                <br>
-                Task date:
-                <input id="due_to" name="due_to" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
-                    <span class="validity"></span>
-                <br><br>
-                <center><input type="submit" value="Add Task" class="btn btn-default" style="background-color: black; color: white">  </center>
-            </form> 
-            <!-- Add Task End -->
-
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color: red; color: white">Close</button>
-        </div>
-        </div>
-    </div>
-    </div>
-                        
     <!-- Message -->
     {% if messages %}
             {% for message in messages %}
@@ -84,7 +52,7 @@
                         {% endif %}
 
                         <td style="text-align:center"> 
-                            <a href='{% url 'editTask' task.id %}'> <p class='btn btn-primary'>
+                            <a href='{% url 'tasks.update' task.id %}'> <p class='btn btn-link'>
                                 #{{ task.id }}  </p>
                             <a>
                         </td>
@@ -122,26 +90,21 @@
 {% block js %}
 <script type="text/javascript">
 
-    $(document).ready(function(){
-        $(".task-list").mouseenter(function(){
-            $(this).addClass("text-bold");
-        }).mouseleave(function(){
-            $(this).removeClass("text-bold");
-        });
-    });
-
     $('#reset').click(function() {
         $("#addTask")[0].reset();
     })
 
+    $.post('asdasdasd').success(resposta => {
+        res
+    })
     // Get the modal
     var modal = document.getElementById('id01');
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     }
 </script>
 {% endblock js %}
