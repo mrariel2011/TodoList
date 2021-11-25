@@ -10,9 +10,13 @@ class TaskModelForm(forms.ModelForm):
             "description",
             "due_to",
         ]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["title"].widget.attrs.update({"class": "form-control"})
-        self.fields["description"].widget.attrs.update({"class": "form-control"})
-        self.fields["due_to"].widget.attrs.update({"class": "form-control"})
+        widgets = {
+            "title": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Add some title here",
+                }
+            ),
+            "description": forms.Textarea(attrs={"class": "form-control"}),
+            "due_to": forms.TextInput(attrs={"class": "form-control"}),
+        }
