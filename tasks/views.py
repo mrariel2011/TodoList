@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView, UpdateView, CreateView
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib import messages
@@ -14,6 +14,26 @@ class TaskUpdateView(UpdateView):
     form_class = TaskModelForm
     context_object_name = "task"
     template_name = "tasks/task_update.html"
+
+    def get_success_url(self):
+        return reverse("tasks.list")
+
+
+class TaskInsertView(CreateView):
+    model = Task
+    form_class = TaskModelForm
+    context_object_name = "task"
+    template_name = "tasks/insert.html"
+
+    def get_success_url(self):
+        return reverse("tasks.list")
+
+
+class TaskDeleteView(DeleteView):
+    model = Task
+    form_class = TaskModelForm
+    context_object_name = "task"
+    template_name = "tasks/delete.html"
 
     def get_success_url(self):
         return reverse("tasks.list")
