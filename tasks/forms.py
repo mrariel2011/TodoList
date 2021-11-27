@@ -10,6 +10,7 @@ class TaskModelForm(forms.ModelForm):
             "description",
             "due_to",
         ]
+        """
         widgets = {
             "title": forms.TextInput(
                 attrs={
@@ -20,3 +21,4 @@ class TaskModelForm(forms.ModelForm):
             "description": forms.Textarea(attrs={"class": "form-control"}),
             "due_to": forms.TextInput(attrs={"class": "form-control"}),
         }
+        """

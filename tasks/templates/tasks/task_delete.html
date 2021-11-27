@@ -1,6 +1,8 @@
+
 {% extends 'theme/bootstrap.html' %}
 
 {% load widget_tweaks %}
+
 
 {% block content %}
 
@@ -16,20 +18,20 @@
         <form method='post' enctype="multipart/form-data">{% csrf_token %}
           <p>
             <label for="id_title">Title:</label>
-            {% render_field form.title class+="form-control" placeholder=form.title.label %}
+            <input type="text" name="title" readonly="readonly" value="{{ task.title }}" maxlength="264" class="form-control" placeholder="Title" required="" id="id_title">
           </p>
           <p>
             <label for="id_description">Description:</label>
-            {% render_field form.description class+="form-control" %}
+            <textarea name="description" readonly="readonly" cols="40" rows="10" class="form-control" id="id_description">{{ task.description }}</textarea>
           </p>
           <p>
             <label for="id_due_to">Due to:</label>
-            <input type="date" name="due_to" value='{{ form.due_to.value |date:"Y-m-d" }}' class="form-control" required="" id="id_due_to" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
-            <input type="hidden" name="initial-due_to" value='{{ form.due_to.value |date:"Y-m-d" }}' id="initial-id_due_to">            
+            <input type="date" name="due_to" readonly="readonly" value='{{ task.due_to |date:"Y-m-d" }}' class="form-control" required="" id="id_due_to" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+            <input type="hidden" name="initial-due_to" value='{{ task.due_to |date:"Y-m-d" }}' id="initial-id_due_to">
           </p>
 
           <div class="form-actions">
-            <button type="submit" class="btn btn-primary" >Save</button>
+            <button type="submit" class="btn btn-danger">Delete</button>
           </div>
         </form>
       </div>

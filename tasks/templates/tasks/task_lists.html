@@ -6,15 +6,15 @@
 
     <!-- Message -->
     {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-warning alert-dismissable" role="alert">
-                    <button class ='close' data-dismiss='alert'>
-                        <small><sup>X</sup></small>
-                    </button>
-                    {{ message }}
-                </div>
-            {% endfor %}
-            {% endif %}
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissable" role="alert">
+                <button class ='close' data-dismiss='alert'>
+                    <small><sup>X</sup></small>
+                </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
     <!-- Message End -->
 
 <section>
