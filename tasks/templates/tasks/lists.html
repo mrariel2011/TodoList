@@ -4,8 +4,6 @@
 
 {% block content %}
 
-    {% include 'tasks/insert.html' %}
-
     <!-- Message -->
     {% if messages %}
             {% for message in messages %}
@@ -24,63 +22,48 @@
             <h1>
             Tasks list
             <!-- Button trigger modal addTask -->
-            <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#addtaskModal" id="reset"
-                style="background-color: green; color: white">
-            +
-            </button>
+            <a href='{% url 'tasks.insert' %}' class="btn btn-success">
+            + </a>
             </h1>
-            
+
             <!-- Task List-->
-                <ul class="list-group">
-                <div class="table-responsive">
-                    <table id="list" class="table table-bordered border-primary" style='margin-left: auto; margin-right: auto;'>
-                    <thead style="text-align:center">
-                    <tr class="table table-primary ">
-                        <td> #ID/Edit  </td>
-                        <td> Title </td>
-                        <td> Description </td>
-                        <td> Date </td>
-                        <td> Done? </td>
-                        <td> Delete? </td>
-                    </tr>
-                    </thead>
-                    {% for task in tasks %}
-                        {% if task.done %}
-                            <tr class="task-list{% if task.done %} active{% endif %}" >
-                        {% else %}
-                            <tr class="table-active task-list{% if task.done %} active{% endif %}">
-                        {% endif %}
+            <div class="p-3 mb-2 bg-secondary text-white">
 
-                        <td style="text-align:center"> 
-                            <a href='{% url 'tasks.update' task.id %}'> <p class='btn btn-link'>
-                                #{{ task.id }}  </p>
-                            <a>
-                        </td>
-
-                        <td> 
-                            <div style="width:100%;  max-width: 300px; overflow:auto; text-align:center; margin-left: auto; margin-right: auto;"> 
-                            {{ task.title }}
-                           </div>
-                        </td>
-
-                        <td> <div style="width:100%;  max-width: 300px; overflow:auto; text-align:center; margin-left: auto; margin-right: auto;"> 
-                            {{ task.description}}  </div></td>
+            <div class="row">
+                {% for task in tasks %}
+                <div class="col-sm-3">
+                    {% if task.done %}
+                        <div class="card text-dark bg-light mb-3">
+                    {% else %}
+                        <div class="card text-white bg-dark mb-3">
+                    {% endif %}
+                        <div class="card-body">
                         
-                        <td style="text-align:center"> {{task.due_to}} </td>
-                        <td style="text-align:center">
-                         <a href='{% url 'doneTask' task.id %}'>
-                            {% if task.done %} <p class='btn btn-secondary'> Undone </p> {% else %} <p class='btn btn-primary'> Done </p> {% endif %}
-                        </a></center></td>
-                        <td><center> <a href='{% url 'deleteTask' task.id %}' class='btn btn-primary'> Delete </a></center></td>
-
-
-                        </tr>
-
-                    {% endfor %}
-                    </table>
+                            <h5 class="card-title">
+                                {{ task.title }}
+                            </h5>
+                            <p class="card-text">
+                                <div style="width:100%;  max-width: 400px; height:100%; max-height: 60px; overflow:auto;"> 
+                                {{ task.description}}  
+                                </div>
+                                <br>
+                                {{ task.due_to_iso }}
+                            </p>
+                            
+                            <br>
+                            <a href='{% url 'tasks.update' task.id %}' class='btn btn-info'> Update </a>
+                            &nbsp;&nbsp;
+                            <a href='{% url 'tasks.delete' task.id %}' class='btn btn-danger'> Delete </a>
+                            &nbsp;&nbsp;
+                            <a href='{% url 'doneTask' task.id %}' {% if task.done %} class='btn btn-secondary'> Undone </a> {% else %} class='btn btn-primary'> Done </a> {% endif %}
+                                                        
+                        </div>
+                    </div>
                 </div>
-                </ul>
-            
+                {% endfor %}
+            </div>
+
+            </div>
 
 </section>
 
@@ -90,21 +73,5 @@
 {% block js %}
 <script type="text/javascript">
 
-    $('#reset').click(function() {
-        $("#addTask")[0].reset();
-    })
-
-    $.post('asdasdasd').success(resposta => {
-        res
-    })
-    // Get the modal
-    var modal = document.getElementById('id01');
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
 </script>
 {% endblock js %}
