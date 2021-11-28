@@ -3,9 +3,6 @@ from tasks.models import Task
 from datetime import date, datetime
 
 
-# Create your views here.
-
-
 def home(request):
     doneCount = Task.objects.filter(done=True).count
     notdoneCount = Task.objects.filter(done=False).count
