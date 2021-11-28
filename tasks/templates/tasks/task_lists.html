@@ -7,11 +7,9 @@
     <!-- Message -->
     {% if messages %}
         {% for message in messages %}
-            <div class="alert alert-warning alert-dismissable" role="alert">
-                <button class ='close' data-dismiss='alert'>
-                    <small><sup>X</sup></small>
-                </button>
-                {{ message }}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endfor %}
     {% endif %}
@@ -47,7 +45,8 @@
                                 {{ task.description}}  
                                 </div>
                                 <br>
-                                {{ task.due_to_iso }}
+                                {{ task.due_to|naturaltime }}
+
                             </p>
                             
                             <br>
