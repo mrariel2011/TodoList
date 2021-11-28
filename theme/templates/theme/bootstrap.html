@@ -31,7 +31,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     {% endblock jstop %}
 
-
+<!-- REMOVER
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" position: fixed>
       <div class="container-fluid">
         <a class="navbar-brand" href="/#">My todo list</a> 
@@ -48,6 +48,26 @@
             </li>
           </ul>
         </div>
+      </div>
+    </nav>
+-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">📝 Arielist</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'homepage.home' %}">Todo <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'tasks.list' %}">List</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/mrariel2011/TodoList">Github</a>
+          </li>
+        </ul>
       </div>
     </nav>
       

@@ -20,7 +20,7 @@
             <h1>
             Tasks list
             <!-- Button trigger modal addTask -->
-            <a href='{% url 'tasks.insert' %}' class="btn btn-success">
+            <a href="{% url 'tasks.insert' %}" class="btn btn-success">
             + </a>
             </h1>
 
@@ -46,15 +46,14 @@
                                 </div>
                                 <br>
                                 {{ task.due_to|naturaltime }}
-
                             </p>
                             
                             <br>
-                            <a href='{% url 'tasks.update' task.id %}' class='btn btn-info'> Update </a>
+                            <a href="{% url 'tasks.update' task.id %}" class='btn btn-info'> Update </a>
                             &nbsp;&nbsp;
-                            <a href='{% url 'tasks.delete' task.id %}' class='btn btn-danger'> Delete </a>
+                            <a href="{% url 'tasks.delete' task.id %}" class='btn btn-danger'> Delete </a>
                             &nbsp;&nbsp;
-                            <a href='{% url 'doneTask' task.id %}' {% if task.done %} class='btn btn-secondary'> Undone </a> {% else %} class='btn btn-primary'> Done </a> {% endif %}
+                            <a href="{% url 'doneTask' task.id %}" {% if task.done %} class='btn btn-secondary'> Undone </a> {% else %} class='btn btn-primary'> Done </a> {% endif %}
                                                         
                         </div>
                     </div>
