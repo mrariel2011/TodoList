@@ -2,7 +2,6 @@
 
 {% load humanize %}
 
-{% load bootstrap_icons %}
 
 {% block content %}
 
@@ -11,14 +10,17 @@
     <div class="container">
     <div class="p-3 mb-2 bg-secondary text-white">
 
-    Numero total de Tasks abertas (not done)
-    Numero total de tasks concluídas (done)
-    Numero total de tasks pra hoje (due_to == today())
-    Numero total de tasks vencidas (due_to < now())
+    <ul class="list-group">
+        <li class="list-group-item"> Tarefas Abertas: {{ done_count }} </li>
+        <li class="list-group-item"> Tarefas Concluídas: {{ notdone_count }} </li>
+        <li class="list-group-item"> Tarefas para hoje: {{ today_count }} </li>
+        <li class="list-group-item"> Tarefas vencidas: {{ expired_count }}</li>
+    </ul>
 
-    <a href="tasks" class='btn btn-primary'> 
-        {% bs_icon 'journal' size='1.5em' extra_classes="bi-valign-bottom" %} TODO LIST 
-    </a> 
+    <br>
+    <center><a href="tasks" class='btn btn-primary' > 
+        <i class="bi bi-journal"> TODO LIST </i>
+    </a> <center>
     
     </div>
     <div>

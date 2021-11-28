@@ -1,7 +1,6 @@
 {% extends 'theme/bootstrap.html' %}
 
 {% load humanize %}
-{% load bootstrap_icons %}
 
 
 {% block content %}
@@ -52,16 +51,16 @@
                             
                             <br>
                             <a href="{% url 'tasks.update' task.id %}" class='btn btn-info'> 
-                            {% bs_icon 'clipboard' size='1.5em' extra_classes="bi-valign-bottom" %} Update </a>
+                            <i class="bi bi-clipboard"></i> Update </a>
                             &nbsp;&nbsp;
                             <a href="{% url 'tasks.delete' task.id %}" class='btn btn-danger'> 
-                            {% bs_icon 'trash-fill' size='1.5em' extra_classes="bi-valign-bottom" %} Delete </a>
+                            <i class="bi bi-trash-fill"></i> Delete </a>
                             &nbsp;&nbsp;
                              
                             {% if task.done %} <a href="{% url 'doneTask' task.id %}" class='btn btn-secondary'>  
-                                {% bs_icon 'check-square-fill' size='1.5em' extra_classes="bi-valign-bottom" %} Undone </a> 
+                                <i class="bi bi-check-square-fill"></i> Undone </a> 
                             {% else %}  <a href="{% url 'doneTask' task.id %}" class='btn btn-primary'>
-                                {% bs_icon 'check-square' size='1.5em' extra_classes="bi-valign-bottom" %}  Done </a> {% endif %}
+                                <i class="bi bi-check-square"></i>  Done </a> {% endif %}
                                                         
                         </div>
                     </div>
