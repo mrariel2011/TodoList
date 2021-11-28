@@ -48,6 +48,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "widget_tweaks",
+    "django_bootstrap_icons",
 ]
 
 if DEBUG:

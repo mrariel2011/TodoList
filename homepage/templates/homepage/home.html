@@ -2,11 +2,27 @@
 
 {% load humanize %}
 
+{% load bootstrap_icons %}
+
 {% block content %}
 
 <section>
-    <a href="tasks">    TODO LIST </a> <br>
-</section
+    <br>
+    <div class="container">
+    <div class="p-3 mb-2 bg-secondary text-white">
+
+    Numero total de Tasks abertas (not done)
+    Numero total de tasks concluídas (done)
+    Numero total de tasks pra hoje (due_to == today())
+    Numero total de tasks vencidas (due_to < now())
+
+    <a href="tasks" class='btn btn-primary'> 
+        {% bs_icon 'journal' size='1.5em' extra_classes="bi-valign-bottom" %} TODO LIST 
+    </a> 
+    
+    </div>
+    <div>
+</section>
 
 {% endblock content %}
 

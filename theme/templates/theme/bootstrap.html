@@ -1,4 +1,5 @@
 {% load static %}
+{% load bootstrap_icons %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +15,9 @@
     {% block css %}
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    
+    <!-- Bootstrap Icons (useful for align icons with text)-->
+    <link rel="stylesheet" href="{% static 'bootstrap_icons/css/bootstrap_icons.css' %}">
 
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" />
@@ -45,7 +49,8 @@
             <a class="nav-link" href="{% url 'tasks.list' %}">List</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://github.com/mrariel2011/TodoList">Github</a>
+            <a class="nav-link" href="https://github.com/mrariel2011/TodoList">
+            {% bs_icon 'github' size='1.5em' extra_classes="bi-valign-bottom" %} Github</a>
           </li>
         </ul>
       </div>
