@@ -15,28 +15,23 @@
         {% endfor %}
     {% endif %}
     <!-- Message End -->
-<section>
-            
-            <h1><center>
-            Tasks list
-            </center></h1>
+<div class="container">
 
-            <!-- Task List-->
-            <div class="p-3 mb-2 bg-secondary text-white">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="text-center">Tasks list</h1>
+        </div>
+    </div>
 
             <div class="row">
                 {% for task in tasks %}
                 <div class="col-sm-3">
-                    {% if task.done %}
-                        <div class="card text-dark bg-light mb-3">
-                    {% else %}
-                        <div class="card text-white bg-dark mb-3">
-                    {% endif %}
+
+                    <div class="card card-task text-white {% if task.done %}bg-gray-400 {% else %} bg-gray-800 {% endif %}mb-3">
+
                         <div class="card-body">
-                        
-                            <h5 class="card-title">
-                                {{ task.title }}
-                            </h5>
+
+                            <h5 class="card-title">{{ task.title }}</h5>
                             <p class="card-text">
                                 <div style="width:100%;  max-width: 400px; height:100%; max-height: 60px; overflow:auto;"> 
                                 {{ task.description}}  
@@ -44,54 +39,32 @@
                                 <br>
                                 {{ task.due_to|naturaltime }}
                             </p>
-                            
+
                             <br>
-                            <a href="{% url 'tasks.update' task.id %}" class='btn btn-info'> 
+                            <a href="{% url 'tasks.update' task.id %}" class='btn btn-sm btn-info'>
                             <i class="bi bi-clipboard"></i> Update </a>
                             &nbsp;&nbsp;
-                            <a href="{% url 'tasks.delete' task.id %}" class='btn btn-danger'> 
+                            <a href="{% url 'tasks.delete' task.id %}" class='btn btn-sm btn-danger'>
                             <i class="bi bi-trash-fill"></i> Delete </a>
                             &nbsp;&nbsp;
                              
-                            {% if task.done %} <a href="{% url 'doneTask' task.id %}" class='btn btn-secondary'>  
-                                <i class="bi bi-check-square-fill"></i> Undone </a> 
-                            {% else %}  <a href="{% url 'doneTask' task.id %}" class='btn btn-primary'>
+                            {% if task.done %} <a href="{% url 'doneTask' task.id %}" class='btn btn-sm btn-secondary'>
+                                <i class="bi bi-check-square-fill"></i> Undone </a>
+                            {% else %}  <a href="{% url 'doneTask' task.id %}" class='btn btn-sm btn-primary'>
                                 <i class="bi bi-check-square"></i>  Done </a> {% endif %}
-                                                        
+
                         </div>
                     </div>
                 </div>
                 {% endfor %}
-                <a href="{% url 'tasks.insert' %}" class="float">
-                    <i class="bi bi-plus my-float"  style="font-size:36px;"></i> 
-                </a>
             </div>
 
-            </div>
+        <a type="button" class="btn-danger btn-float" href="{% url 'tasks.insert' %}">
+            <span class="display-5">
+            <i class="bi bi-plus"></i>
+            </span>
+        </a>
+</div>
 
-</section>
-
-<!-- Floating Button-->
-<style>
-    *{padding:0;margin:0;}
-
-    .float{
-        position:fixed;
-        width:60px;
-        height:60px;
-        bottom:120px;
-        right:10px;
-        background-color:#0C9;
-        color:#FFF;
-        border-radius:50px;
-        text-align:center;
-    }
-</style>
 
 {% endblock content %}
-
-{% block js %}
-<script type="text/javascript">
-
-</script>
-{% endblock js %}
