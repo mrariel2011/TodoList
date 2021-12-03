@@ -53,6 +53,18 @@
             <a class="nav-link" href="https://github.com/mrariel2011/TodoList">
             <i class="bi bi-github"></i> Github</a>
           </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="#">{{ user.username }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/logout">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/login">Login</a>
+          </li>
+          {% endif %}
         </ul>
       </div>
     </nav>

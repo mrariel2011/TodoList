@@ -40,6 +40,12 @@ class TaskInsertView(CreateView):
     template_name = "tasks/task_create.html"
     success_message = "Task created successfully!!!!"
 
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return super(TaskInsertView, self).form_valid(form)
+
     def get_success_url(self):
         messages.success(self.request, self.success_message)
         return reverse("tasks.list")
@@ -50,7 +56,8 @@ class ListTasksView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ListTasksView, self).get_context_data(**kwargs)
-        context["tasks"] = Task.objects.order_by("-id")
+        user_logged = self.request.user
+        context["tasks"] = Task.objects.filter(user=user_logged).order_by("-id")
         return context
 
     def Done_Task(request, task_id):
