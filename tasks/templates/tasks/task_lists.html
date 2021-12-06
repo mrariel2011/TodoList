@@ -27,7 +27,7 @@
                 {% for task in tasks %}
                 <div class="col-sm-3">
 
-                    <div class="card card-task text-white {% if task.done %}bg-gray-400 {% else %} bg-gray-800 {% endif %}mb-3">
+                    <div class="card card-task text-white {% if task.done %}bg-gray-400 {% else %} bg-gray-800 {% endif %}mb-3" id="task_{{ task.id }}">
 
                         <div class="card-body">
 

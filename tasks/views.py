@@ -56,8 +56,11 @@ class ListTasksView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ListTasksView, self).get_context_data(**kwargs)
+        context["tasks"] = []
+
         user_logged = self.request.user
-        context["tasks"] = Task.objects.filter(user=user_logged).order_by("-id")
+        if user_logged.is_authenticated:
+            context["tasks"] = Task.objects.filter(user=user_logged).order_by("-id")
         return context
 
     def Done_Task(request, task_id):
