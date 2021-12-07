@@ -9,25 +9,28 @@
     <br>
     <div class="container">
     <div class="p-3 mb-2 bg-secondary text-white">
-
-    <ul class="list-group">
-        <li class="list-group-item"> Tarefas Abertas: {{ done_count }} </li>
-        <li class="list-group-item"> Tarefas Concluídas: {{ notdone_count }} </li>
-        <li class="list-group-item"> Tarefas para hoje: {{ today_count }} </li>
-        <li class="list-group-item"> Tarefas vencidas: {{ expired_count }}</li>
-    </ul>
-
-    <br>
-    <center><a href="tasks" class='btn btn-primary' > 
-        <h4 class="bi bi-journal"> TODO LIST </h4>
-    </a> <center>
     
+    {% if user.is_authenticated %}
+
+        <ul class="list-group">
+            <li class="list-group-item"> Tarefas Abertas: {{ done_count }} </li>
+            <li class="list-group-item"> Tarefas Concluídas: {{ notdone_count }} </li>
+            <li class="list-group-item"> Tarefas para hoje: {{ today_count }} </li>
+            <li class="list-group-item"> Tarefas vencidas: {{ expired_count }}</li>
+        </ul>
+
+        <br>
+        <center><a href="tasks" class='btn btn-primary' > 
+            <h4 class="bi bi-journal"> TODO LIST </h4>
+        </a> <center>
+    {% else %}
+
+        <center><a href="{% url 'usuarios.login' %}" class='btn btn-primary' > 
+            <h4 class="bi bi-journal"> Login </h4>
+        </a> <center>
+    {% endif %}
     </div>
     <div>
 </section>
 
 {% endblock content %}
-
-
-
-

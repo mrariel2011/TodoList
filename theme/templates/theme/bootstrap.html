@@ -55,14 +55,22 @@
           </li>
           {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="#">{{ user.username }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/logout">Logout</a>
+            <div class="btn-group">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ user.username }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+              <li><a class="dropdown-item" href="#">Imagine uma pagina legal de usuario</a></li>
+              <li><a class="dropdown-item" href="/admin/logout">Logout</a></li>
+            </ul>
+          </div>
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="/admin/login">Login</a>
+            <a class="nav-link" href="{% url 'usuarios.login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'usuarios.cadastrar' %}">Cadastrar</a>
           </li>
           {% endif %}
         </ul>
