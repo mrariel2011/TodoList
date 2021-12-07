@@ -57,6 +57,7 @@ LOCAL_APPS = [
     "theme.apps.ThemeConfig",
     "tasks.apps.TasksConfig",
     "homepage.apps.HomepageConfig",
+    "usuarios.apps.UsuariosConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -153,3 +154,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # debugtoolbar
 INTERNAL_IPS = ["127.0.0.1", "10.0.2.2"]
+
+# Configurações de Usuarios
+LOGIN_REDIRECT_URL = "homepage.home"
+LOGOUT_REDIRECT_URL = "usuarios.login"
+LOGIN_URL = "homepage.home"

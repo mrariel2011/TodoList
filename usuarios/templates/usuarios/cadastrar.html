@@ -1,0 +1,49 @@
+{% extends 'theme/bootstrap.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Cadastro</h2>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <form  method="post" id="login-form"><input type="hidden" name="csrfmiddlewaretoken" value="qioWsji1Tg9zIoHueKbjpoiNEeBmOOoe3xzwKeWVWcHE6jfNVBoZO7bULfapvxUZ">
+                {% csrf_token %}
+                <div class="form-row">
+                  <label class="required" for="id_username">Username:</label> 
+                  <input class="form-control w-25 p-1" type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
+                </div>
+                <div class="form-row">
+                  <label class="required" for="id_email">Email:</label> 
+                  <input class="form-control w-25 p-1" type="text" name="email" autofocus autocapitalize="none" autocomplete="email" maxlength="150" required id="id_email">
+                </div>
+                <div class="form-row">
+                  <label class="required" for="id_password1">Password:</label> 
+                  <input class="form-control w-25 p-1" type="password" name="password1" autocomplete="current-password1" required id="id_password1">
+                  <input class="form-control w-25 p-1" type="hidden" name="next" value="/">
+                </div>
+                <div class="form-row">
+                  <label class="required" for="id_password2">Confirmar Password:</label> 
+                  <input class="form-control w-25 p-1" type="password" name="password2" autocomplete="current-password2" required id="id_password2">
+                  <input class="form-control w-25 p-1" type="hidden" name="next" value="/">
+                </div>
+                
+                
+                <div class="submit-row">
+                  <br><input type="submit" value="Log in">
+                </div>
+              </form>
+              
+        </div>
+    </div>
+
+  </div>
+
+{% endblock content %}
+
+    
