@@ -69,7 +69,6 @@ class ListTasksView(LoginRequiredMixin, TemplateView):
         return context
 
     def Done_Task(request, task_id):
-        login_url = reverse_lazy("usuarios.login")
         item = Task.objects.get(pk=task_id)
         item.done = not item.done
         item.save()

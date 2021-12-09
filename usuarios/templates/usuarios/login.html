@@ -11,28 +11,26 @@
       </div>
     </div>
     <div class="row">
-        <div class="col-md-12 form-group">
-            <form action="/admin/login/?next=/admin/login" method="post" id="login-form"><input type="hidden" name="csrfmiddlewaretoken" value="qioWsji1Tg9zIoHueKbjpoiNEeBmOOoe3xzwKeWVWcHE6jfNVBoZO7bULfapvxUZ">
-                {% csrf_token %}
-                <div class="form-row">
-                  <label class="required" for="id_username">Usuario:</label> 
-                  <input class="form-control w-25 p-1" type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
-                </div>
-                <div class="form-row">
-                  
-                  <label class="required" for="id_password">Senha:</label> 
-                  <input class="form-control w-25 p-1" type="password" name="password" autocomplete="current-password" required id="id_password">
-                  <input class="form-control w-25 p-1" type="hidden" name="next" value="/">
-                </div>
+      <div class="col-md-12 form-group">
+        <form action="/admin/login/?next=/" method="post" id="login-form" enctype="multipart/form-data"> {% csrf_token %}
+          <div class="form-row">
+            <label class="required" for="id_username">Usuario:</label> 
+              {% render_field form.username class+="form-control" placeholder=form.username.label %}
+          </div>
+
+          <div class="form-row">
+            <label class="required" for="id_password">Senha:</label> 
+              {% render_field form.password class+="form-control" placeholder=form.password.label type="password" %}
+          </div>
                 
-                
-                <div class="submit-row">
-                  <br><input type="submit" value="Entrar">
-                </div>
-              </form>
-            <p> Não se cadastrou ainda? 
-              <a href="{% url 'usuarios.cadastrar' %}">Cadastre-se agora!</a>
-            </p>
+          <div class="submit-row">
+            <br><input type="submit" value="Entrar" class="btn btn-primary">
+          </div>
+        </form>
+        
+        <p> Não se cadastrou ainda? 
+          <a href="{% url 'usuarios.cadastrar' %}">Cadastre-se agora!</a>
+        </p>
         </div>
     </div>
 
