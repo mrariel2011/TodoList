@@ -15,7 +15,7 @@
             <form  method="post" id="login-form"><input type="hidden" name="csrfmiddlewaretoken" value="qioWsji1Tg9zIoHueKbjpoiNEeBmOOoe3xzwKeWVWcHE6jfNVBoZO7bULfapvxUZ">
                 {% csrf_token %}
                 <div class="form-row">
-                  <label class="required" for="id_username">Username:</label> 
+                  <label class="required" for="id_username">Usuario:</label> 
                   <input class="form-control w-25 p-1" type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
                 </div>
                 <div class="form-row">
@@ -23,22 +23,24 @@
                   <input class="form-control w-25 p-1" type="text" name="email" autofocus autocapitalize="none" autocomplete="email" maxlength="150" required id="id_email">
                 </div>
                 <div class="form-row">
-                  <label class="required" for="id_password1">Password:</label> 
+                  <label class="required" for="id_password1">Senha:</label> 
                   <input class="form-control w-25 p-1" type="password" name="password1" autocomplete="current-password1" required id="id_password1">
                   <input class="form-control w-25 p-1" type="hidden" name="next" value="/">
                 </div>
                 <div class="form-row">
-                  <label class="required" for="id_password2">Confirmar Password:</label> 
+                  <label class="required" for="id_password2">Confirmar Senha:</label> 
                   <input class="form-control w-25 p-1" type="password" name="password2" autocomplete="current-password2" required id="id_password2">
                   <input class="form-control w-25 p-1" type="hidden" name="next" value="/">
                 </div>
                 
                 
                 <div class="submit-row">
-                  <br><input type="submit" value="Log in">
+                  <br><input type="submit" value="Cadastrar">
                 </div>
               </form>
-              
+              <p> Já possui uma conta? 
+                <a href="{% url 'usuarios.login' %}">Entre agora!</a>
+              </p>
         </div>
     </div>
 
