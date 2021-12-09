@@ -13,7 +13,6 @@ from .forms import TaskModelForm
 
 
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
-    login_url = reverse_lazy("usuarios.login")
     model = Task
     form_class = TaskModelForm
     context_object_name = "task"
@@ -26,7 +25,6 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
-    login_url = reverse_lazy("usuarios.login")
     model = Task
     form_class = TaskModelForm
     context_object_name = "task"
@@ -39,7 +37,6 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class TaskInsertView(LoginRequiredMixin, CreateView):
-    login_url = reverse_lazy("usuarios.login")
     model = Task
     form_class = TaskModelForm
     context_object_name = "task"
@@ -58,7 +55,6 @@ class TaskInsertView(LoginRequiredMixin, CreateView):
 
 
 class ListTasksView(LoginRequiredMixin, TemplateView):
-    login_url = reverse_lazy("usuarios.login")
     template_name = "tasks/task_lists.html"
 
     def get_context_data(self, **kwargs):
