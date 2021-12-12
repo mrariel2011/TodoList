@@ -12,27 +12,23 @@
     </div>
     <div class="row">
         <div class="col-md-12 form-group">
-            <form  method="post" id="login-form"><input type="hidden" name="csrfmiddlewaretoken" value="qioWsji1Tg9zIoHueKbjpoiNEeBmOOoe3xzwKeWVWcHE6jfNVBoZO7bULfapvxUZ">
-                {% csrf_token %}
+            <form  action="{% url 'usuarios.cadastrar' %}" method="post" enctype="multipart/form-data"> {% csrf_token %}
                 <div class="form-row">
                   <label class="required" for="id_username">Usuario:</label> 
-                  <input class="form-control w-25 p-1" type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
+                  {% render_field form.username class+="form-control" placeholder="Insira seu nome de usuario..." %}
                 </div>
                 <div class="form-row">
                   <label class="required" for="id_email">Email:</label> 
-                  <input class="form-control w-25 p-1" type="text" name="email" autofocus autocapitalize="none" autocomplete="email" maxlength="150" required id="id_email">
+                  {% render_field form.email class+="form-control" placeholder="Insira seu email..." %}
                 </div>
                 <div class="form-row">
                   <label class="required" for="id_password1">Senha:</label> 
-                  <input class="form-control w-25 p-1" type="password" name="password1" autocomplete="current-password1" required id="id_password1">
-                  <input class="form-control w-25 p-1" type="hidden" name="next" value="/">
+                  {% render_field form.password1 class+="form-control" placeholder="Insira sua senha..." %}
                 </div>
                 <div class="form-row">
                   <label class="required" for="id_password2">Confirmar Senha:</label> 
-                  <input class="form-control w-25 p-1" type="password" name="password2" autocomplete="current-password2" required id="id_password2">
-                  <input class="form-control w-25 p-1" type="hidden" name="next" value="/">
+                  {% render_field form.password2 class+="form-control" placeholder="Confirme sua senha..." %}
                 </div>
-                
                 
                 <div class="submit-row">
                   <br><input type="submit" value="Cadastrar" class="btn btn-primary">

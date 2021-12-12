@@ -15,12 +15,12 @@
         <form action="/admin/login/?next=/" method="post" id="login-form" enctype="multipart/form-data"> {% csrf_token %}
           <div class="form-row">
             <label class="required" for="id_username">Usuario:</label> 
-              {% render_field form.username class+="form-control" placeholder=form.username.label %}
+              {% render_field form.username class+="form-control" placeholder="Insira seu nome de usuario..." %}
           </div>
 
           <div class="form-row">
             <label class="required" for="id_password">Senha:</label> 
-              {% render_field form.password class+="form-control" placeholder=form.password.label type="password" %}
+              {% render_field form.password class+="form-control" placeholder="Insira sua senha..." type="password" %}
           </div>
                 
           <div class="submit-row">
