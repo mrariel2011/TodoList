@@ -13,23 +13,29 @@
     <div class="row">
         <div class="col-md-12 form-group">
             <form  action="{% url 'usuarios.cadastrar' %}" method="post" enctype="multipart/form-data"> {% csrf_token %}
-                <div class="form-row">
-                  <label class="required" for="id_username">Usuario:</label> 
-                  {% render_field form.username class+="form-control" placeholder="Insira seu nome de usuario..." %}
-                </div>
-                <div class="form-row">
-                  <label class="required" for="id_email">Email:</label> 
-                  {% render_field form.email class+="form-control" placeholder="Insira seu email..." %}
-                </div>
-                <div class="form-row">
-                  <label class="required" for="id_password1">Senha:</label> 
-                  {% render_field form.password1 class+="form-control" placeholder="Insira sua senha..." %}
-                </div>
-                <div class="form-row">
-                  <label class="required" for="id_password2">Confirmar Senha:</label> 
-                  {% render_field form.password2 class+="form-control" placeholder="Confirme sua senha..." %}
-                </div>
-                
+
+              <div class="form-row">
+                <label class="required" for="id_username">Usuario:</label> 
+                {% render_field form.username class+="form-control" placeholder="Insira seu nome de usuario..." %}
+                <div class="help-block with-errors">{{ form.username.errors }}</div>
+
+              </div>
+              <div class="form-row">
+                <label class="required" for="id_email">Email:</label> 
+                {% render_field form.email class+="form-control" placeholder="Insira seu email..." %}
+                <div class="help-block with-errors">{{ form.email.errors }}</div>
+              </div>
+              <div class="form-row">
+                <label class="required" for="id_password1">Senha:</label> 
+                {% render_field form.password1 class+="form-control" placeholder="Insira sua senha..." %}
+                <div class="help-block with-errors">{{ form.password1.errors }}</div>
+              </div>
+              <div class="form-row">
+                <label class="required" for="id_password2">Confirmar Senha:</label> 
+                {% render_field form.password2 class+="form-control" placeholder="Confirme sua senha..." %}
+                <div class="help-block with-errors">{{ form.password2.errors }}</div>
+              </div>
+
                 <div class="submit-row">
                   <br><input type="submit" value="Cadastrar" class="btn btn-primary">
                 </div>
@@ -43,5 +49,3 @@
   </div>
 
 {% endblock content %}
-
-    
