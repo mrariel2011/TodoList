@@ -9,7 +9,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("homepage.urls")),
     path("tasks/", include("tasks.urls")),
-    path("", include("usuarios.urls")),
+    path("usuarios/", include("usuarios.urls")),
 ]
 
 if "debug_toolbar" in settings.INSTALLED_APPS:

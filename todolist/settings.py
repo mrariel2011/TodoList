@@ -156,6 +156,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 INTERNAL_IPS = ["127.0.0.1", "10.0.2.2"]
 
 # Configurações de Usuarios
-LOGIN_REDIRECT_URL = "homepage.home"
-LOGOUT_REDIRECT_URL = "homepage.home"
-LOGIN_URL = "homepage.home"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+LOGIN_URL = "/usuarios/login/"

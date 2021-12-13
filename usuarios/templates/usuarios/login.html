@@ -12,22 +12,20 @@
     </div>
     <div class="row">
       <div class="col-md-12 form-group">
-        <form action="/admin/login/?next=/" method="post" id="login-form" enctype="multipart/form-data"> {% csrf_token %}
-          <div class="form-row">
-            <label class="required" for="id_username">Usuario:</label> 
-              {% render_field form.username class+="form-control" placeholder="Insira seu nome de usuario..." %}
-          </div>
 
-          <div class="form-row">
-            <label class="required" for="id_password">Senha:</label> 
-              {% render_field form.password class+="form-control" placeholder="Insira sua senha..." type="password" %}
-          </div>
-                
-          <div class="submit-row">
-            <br><input type="submit" value="Entrar" class="btn btn-primary">
-          </div>
+          <form class="row g-3" method="post" action="{% url 'usuarios.login' %}" class="form-control">{% csrf_token %}
+
+            {{ form }}
+
+            <p>
+                <button type="submit" class="btn btn-primary btn-lg">
+                  Login  <i class="fa fa-sign-in"></i>
+                </button>
+            </p>
+            <input type="hidden" name="next" value="{{ next }}" />
+
         </form>
-        
+
         <p> Não se cadastrou ainda? 
           <a href="{% url 'usuarios.cadastrar' %}">Cadastre-se agora!</a>
         </p>
@@ -38,4 +36,11 @@
 
 {% endblock content %}
 
-    
+{% block js %}
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#id_username').addClass('form-control');
+    $('#id_password').addClass('form-control');
+  });
+</script>
+{% endblock js %}
