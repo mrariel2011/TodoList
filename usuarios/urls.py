@@ -15,11 +15,8 @@ urlpatterns = [
         ),
         name="usuarios.login",
     ),
-    # path(
-    #     "login/",
-    #     auth_views.LoginView.as_view(template_name="usuarios/login.html"),
-    #     name="usuarios.login",
-    # ),
     # CADASTRAR
     path("cadastrar/", views.UsuarioCreate.as_view(), name="usuarios.cadastrar"),
+    # LOGOUT
+    path("logout/", auth_views.LogoutView.as_view(), name="usuarios.logout"),
 ]
