@@ -1,0 +1,17 @@
+version: "2.4"
+services:
+
+  postgres_local:
+    container_name: "todolist-postgres_local"
+    network_mode: host
+    image: "postgres:13.3-alpine"
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
