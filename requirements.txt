@@ -9,3 +9,6 @@ django-widget-tweaks==1.4.9
 
 #Deploy
 gunicorn==20.1.0
+
+#Database
+psycopg2==2.9.2
