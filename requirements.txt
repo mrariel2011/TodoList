@@ -6,3 +6,6 @@ sqlparse==0.4.2
 
 #frontend
 django-widget-tweaks==1.4.9
+
+#Deploy
+gunicorn==20.1.0
