@@ -1,3 +1,4 @@
+from aiohttp import request
 from django.views.generic import TemplateView
 from django.views.generic.edit import DeleteView, UpdateView, CreateView
 from django.http import HttpResponseRedirect
@@ -64,6 +65,13 @@ class ListTasksView(LoginRequiredMixin, TemplateView):
         user_logged = self.request.user
         if user_logged.is_authenticated:
             context["tasks"] = Task.objects.filter(user=user_logged).order_by("-id")
+            if self.request.method == "GET":
+                searched = self.request.GET.get("searchTask")
+                if searched != None:
+                    context["tasks"] = Task.objects.filter(
+                        user=user_logged, title__contains=searched
+                    ).order_by("-id")
+                return context
         else:
             messages.warning(self.request, ("Entre para interagir!"))
         return context
