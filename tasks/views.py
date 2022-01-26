@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.shortcuts import reverse
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage
 
 
 from .models import Task
@@ -55,8 +57,25 @@ class TaskInsertView(LoginRequiredMixin, CreateView):
         return reverse("tasks.list")
 
 
+class MyPaginator(Paginator):
+    def validate_number(self, number):
+        try:
+            return super().validate_number(number)
+        except EmptyPage:
+            if int(number) > 1:
+                # return the last page
+                return self.num_pages
+            elif int(number) < 1:
+                # return the first page
+                return 1
+            else:
+                raise
+
+
 class ListTasksView(LoginRequiredMixin, TemplateView):
     template_name = "tasks/task_lists.html"
+    paginate_by = 2
+    paginator_class = MyPaginator
 
     def get_context_data(self, **kwargs):
         context = super(ListTasksView, self).get_context_data(**kwargs)
@@ -67,13 +86,16 @@ class ListTasksView(LoginRequiredMixin, TemplateView):
             context["tasks"] = Task.objects.filter(user=user_logged).order_by("-id")
             if self.request.method == "GET":
                 searched = self.request.GET.get("searchTask")
-                if searched != None:
+                if searched is not None:
                     context["tasks"] = Task.objects.filter(
                         user=user_logged, title__contains=searched
                     ).order_by("-id")
-                return context
         else:
             messages.warning(self.request, ("Entre para interagir!"))
+
+        page = self.request.GET.get("page", 1)
+        paginator = self.paginator_class(context["tasks"], self.paginate_by)
+        context["tasks"] = paginator.page(page)
         return context
 
     def Done_Task(request, task_id):
