@@ -1,14 +1,10 @@
-from django.views.generic import TemplateView
+from django.views.generic import ListView
 from django.views.generic.edit import DeleteView, UpdateView, CreateView
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.contrib import messages
 from django.shortcuts import reverse
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator
-from django.core.paginator import EmptyPage
-
 
 from .models import Task
 from .forms import TaskModelForm
@@ -56,46 +52,39 @@ class TaskInsertView(LoginRequiredMixin, CreateView):
         return reverse("tasks.list")
 
 
-class MyPaginator(Paginator):
-    def validate_number(self, number):
-        try:
-            return super().validate_number(number)
-        except EmptyPage:
-            if int(number) > 1:
-                # return the last page
-                return self.num_pages
-            elif int(number) < 1:
-                # return the first page
-                return 1
-            else:
-                raise
+# class MyPaginator(Paginator):
+#     def validate_number(self, number):
+#         try:
+#             return super().validate_number(number)
+#         except EmptyPage:
+#             if int(number) > 1:
+#                 # return the last page
+#                 return self.num_pages
+#             elif int(number) < 1:
+#                 # return the first page
+#                 return 1
+#             else:
+#                 raise
 
 
-class ListTasksView(LoginRequiredMixin, TemplateView):
+class ListTasksView(LoginRequiredMixin, ListView):
     template_name = "tasks/task_lists.html"
-    paginate_by = 2
-    paginator_class = MyPaginator
+    model = Task
+    context_object_name = "tasks"
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
+        """caso queira adicionar mais objetos no contexto"""
         context = super(ListTasksView, self).get_context_data(**kwargs)
-        context["tasks"] = []
-
-        user_logged = self.request.user
-        if user_logged.is_authenticated:
-            context["tasks"] = Task.objects.filter(user=user_logged).order_by("-id")
-            if self.request.method == "GET":
-                searched = self.request.GET.get("searchTask")
-                if searched is not None:
-                    context["tasks"] = Task.objects.filter(
-                        user=user_logged, title__contains=searched
-                    ).order_by("-id")
-        else:
-            messages.warning(self.request, ("Entre para interagir!"))
-
-        page = self.request.GET.get("page", 1)
-        paginator = self.paginator_class(context["tasks"], self.paginate_by)
-        context["tasks"] = paginator.page(page)
         return context
+
+    def get_queryset(self, **kwargs):
+        search_task = self.request.GET.get("searchTask", "")
+        user_logged = self.request.user
+        query = Task.objects.filter(user=user_logged)
+        if search_task:
+            query = query.filter(title__contains=search_task)
+        return query.order_by("-id").all()
 
     def Done_Task(request, task_id):
         item = Task.objects.get(pk=task_id)

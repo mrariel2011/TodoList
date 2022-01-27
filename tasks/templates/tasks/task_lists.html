@@ -23,15 +23,15 @@
         </div>
     </div>
 
-    <form method='GET'>{% csrf_token %}
-    <div class="row">
-        <div class="col-sm-12"> 
-            <a href="{% url 'tasks.list' %}" class='btn btn-sm btn-primary'> Search </a>
+    <form action="{% url 'tasks.list' %}" method="get" enctype="multipart/form-data" style="margin: 20px 0;">{% csrf_token %}
+        <div class="row">
+            <div class="col-sm-6">
+                <input type="text" name="searchTask" class="form-control" placeholder="Search Task">
+            </div>
+            <div class="col-sm-6"> 
+                <input type="submit" class="btn btn-sm btn-primary" value="Search" />
+            </div>
         </div>
-        <div class="col-sm-12">
-            <input type="text" name="searchTask" class="form-control" placeholder="Search Task" style="width: 300px;"> <br>
-        </div>
-    </div>
     </form>
 
             <div class="row">
