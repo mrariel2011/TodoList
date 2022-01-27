@@ -1,4 +1,3 @@
-from aiohttp import request
 from django.views.generic import TemplateView
 from django.views.generic.edit import DeleteView, UpdateView, CreateView
 from django.http import HttpResponseRedirect
