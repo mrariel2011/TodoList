@@ -71,7 +71,7 @@ class ListTasksView(LoginRequiredMixin, ListView):
     template_name = "tasks/task_lists.html"
     model = Task
     context_object_name = "tasks"
-    paginate_by = 20
+    paginate_by = 4
 
     def get_context_data(self, **kwargs):
         """caso queira adicionar mais objetos no contexto"""
