@@ -26,7 +26,7 @@
     <form action="{% url 'tasks.list' %}" method="get" enctype="multipart/form-data" style="margin: 20px 0;">{% csrf_token %}
         <div class="row">
             <div class="col-sm-6">
-                <input type="text" name="searchTask" class="form-control" placeholder="Search Task">
+                <input type="text" name="searchTask" class="form-control" placeholder="Search Task (Title/Desc)">
             </div>
             <div class="col-sm-6"> 
                 <input type="submit" class="btn btn-sm btn-primary" value="Search" />

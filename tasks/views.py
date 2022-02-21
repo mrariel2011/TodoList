@@ -83,7 +83,9 @@ class ListTasksView(LoginRequiredMixin, ListView):
         user_logged = self.request.user
         query = Task.objects.filter(user=user_logged)
         if search_task:
-            query = query.filter(title__contains=search_task)
+            query = query.filter(title__contains=search_task) | query.filter(
+                description__contains=search_task
+            )
         return query.order_by("-id").all()
 
     def Done_Task(request, task_id):
