@@ -6,7 +6,7 @@ from django.shortcuts import reverse
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Task
+from .models import Task, Category
 from .forms import TaskModelForm
 
 
@@ -52,21 +52,6 @@ class TaskInsertView(LoginRequiredMixin, CreateView):
         return reverse("tasks.list")
 
 
-# class MyPaginator(Paginator):
-#     def validate_number(self, number):
-#         try:
-#             return super().validate_number(number)
-#         except EmptyPage:
-#             if int(number) > 1:
-#                 # return the last page
-#                 return self.num_pages
-#             elif int(number) < 1:
-#                 # return the first page
-#                 return 1
-#             else:
-#                 raise
-
-
 class ListTasksView(LoginRequiredMixin, ListView):
     template_name = "tasks/task_lists.html"
     model = Task
@@ -94,3 +79,20 @@ class ListTasksView(LoginRequiredMixin, ListView):
         item.save()
         messages.success(request, ("Task Atualizado!"))
         return HttpResponseRedirect("/tasks/")
+    
+class CategoryInsertView(LoginRequiredMixin, CreateView):
+    model = Category
+    form_class = TaskModelForm
+    context_object_name = "category"
+    template_name = "tasks/category_create.html"
+    success_message = "Task created successfully!!!!"
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return super(TaskInsertView, self).form_valid(form)
+
+    def get_success_url(self):
+        messages.success(self.request, self.success_message)
+        return reverse("tasks.list")

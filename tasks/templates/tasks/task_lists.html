@@ -23,6 +23,14 @@
         </div>
     </div>
 
+    <!-- Categories -->
+    <div class="row">
+        <div class="col-sm-6">
+            <a href="{% url 'tasks.category' %}" class='btn btn-sm btn-success'> New Category </a>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
     <form action="{% url 'tasks.list' %}" method="get" enctype="multipart/form-data" style="margin: 20px 0;">{% csrf_token %}
         <div class="row">
             <div class="col-sm-6">
@@ -34,6 +42,7 @@
         </div>
     </form>
 
+    <!-- List Cards -->
             <div class="row">
                 {% for task in tasks %}
                 <div class="col-sm-3">

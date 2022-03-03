@@ -1,0 +1,29 @@
+{% extends 'theme/bootstrap.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>New Category</h2>
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <form method='post' enctype="multipart/form-data">{% csrf_token %}
+                <p>
+                    <label for="id_title">Name:</label>
+                    {% render_field form.title class+="form-control" placeholder=form.title.label %}
+                </p>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary" >Create Category</button>
+                </div>
+              </form>
+          </div>
+      </div>
+
+{% endblock content %}
