@@ -98,4 +98,4 @@ class CategoryInsertView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         messages.success(self.request, self.success_message)
-        return reverse("tasks.list")
+        return reverse("tasks.insert")

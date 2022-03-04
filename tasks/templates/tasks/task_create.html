@@ -4,6 +4,17 @@
 
 {% block content %}
 
+<!-- Message -->
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>{{ message }}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+{% endif %}
+<!-- Message End -->
+
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -28,7 +39,7 @@
                     <input type="date" name="due_to" value='{{ form.due_to.value |date:"Y-m-d" }}' class="form-control" required="" id="id_due_to" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
                 </p>
                 <p>
-                    <label for="category"> Category: </label>
+                    <label for="category"> Category: <a href="{% url 'tasks.category' %}" class='btn btn-sm btn-success'> + </a>
                       <div class="list-group">
                         {% for cats in cat %}
                           <label class="list-group-item">
