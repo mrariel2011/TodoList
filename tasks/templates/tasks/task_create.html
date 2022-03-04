@@ -27,6 +27,17 @@
                     <label for="id_due_to">Due to:</label>
                     <input type="date" name="due_to" value='{{ form.due_to.value |date:"Y-m-d" }}' class="form-control" required="" id="id_due_to" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
                 </p>
+                <p>
+                    <label for="category"> Category: </label>
+                      <div class="list-group">
+                        {% for cats in cat %}
+                          <label class="list-group-item">
+                            <input class="form-check-input me-1" type="checkbox" value="">
+                            {{ cats.name }}
+                          </label>
+                        {% endfor %}
+                      </div>
+                </p>
         
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary" >Create Task</button>
