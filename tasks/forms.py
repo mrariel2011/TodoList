@@ -9,6 +9,7 @@ class TaskModelForm(forms.ModelForm):
             "title",
             "description",
             "due_to",
+            "category",
         ]
         """
         widgets = {

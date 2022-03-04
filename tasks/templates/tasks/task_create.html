@@ -40,14 +40,16 @@
                 </p>
                 <p>
                     <label for="category"> Category: <a href="{% url 'tasks.category' %}" class='btn btn-sm btn-success'> + </a>
+                    {% render_field form.category class+="form-control" %}
+                      <!--
                       <div class="list-group">
-                        {% for cats in cat %}
+                         for cats in cat 
                           <label class="list-group-item">
                             <input class="form-check-input me-1" type="checkbox" value="">
-                            {{ cats.name }}
+                             cats.name 
                           </label>
-                        {% endfor %}
-                      </div>
+                        endfor 
+                      </div>-->
                 </p>
         
             <div class="form-actions">
