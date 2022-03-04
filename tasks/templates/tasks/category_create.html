@@ -16,7 +16,7 @@
             <form method='post' enctype="multipart/form-data">{% csrf_token %}
                 <p>
                     <label for="id_title">Name:</label>
-                    {% render_field form.title class+="form-control" placeholder=form.title.label %}
+                    {% render_field form.name class+="form-control" placeholder=form.name.label %}
                 </p>
 
                 <div class="form-actions">

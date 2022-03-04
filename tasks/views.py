@@ -2,12 +2,12 @@ from django.views.generic import ListView
 from django.views.generic.edit import DeleteView, UpdateView, CreateView
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from django.shortcuts import reverse
+from django.shortcuts import reverse, render
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Task, Category
-from .forms import TaskModelForm
+from .forms import TaskModelForm, CategoryModelForm
 
 
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
@@ -41,6 +41,15 @@ class TaskInsertView(LoginRequiredMixin, CreateView):
     template_name = "tasks/task_create.html"
     success_message = "Task created successfully!!!!"
 
+    def catList(self):
+        cat = Category.objects.all
+        return cat
+    
+    def get_context_data(self, *args, **kwargs):
+        context = super(TaskInsertView, self).get_context_data(*args, **kwargs)
+        context['cat'] = self.catList()
+        return context
+    
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
@@ -82,16 +91,10 @@ class ListTasksView(LoginRequiredMixin, ListView):
     
 class CategoryInsertView(LoginRequiredMixin, CreateView):
     model = Category
-    form_class = TaskModelForm
+    form_class = CategoryModelForm
     context_object_name = "category"
     template_name = "tasks/category_create.html"
-    success_message = "Task created successfully!!!!"
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.user = self.request.user
-        self.object.save()
-        return super(TaskInsertView, self).form_valid(form)
+    success_message = "Category created successfully!!!!"
 
     def get_success_url(self):
         messages.success(self.request, self.success_message)
