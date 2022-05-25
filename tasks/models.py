@@ -5,9 +5,10 @@ from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=264)
-    
+
     def __str__(self):
         return "{} ({})".format(self.name, self.id)
+
 
 class Task(models.Model):
 
@@ -23,9 +24,9 @@ class Task(models.Model):
     )
     category = models.ForeignKey(
         Category,
-        on_delete = models.CASCADE, 
-        blank = True,
-        null = True,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
 
     def __str__(self):

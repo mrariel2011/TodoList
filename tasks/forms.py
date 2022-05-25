@@ -23,7 +23,8 @@ class TaskModelForm(forms.ModelForm):
             "due_to": forms.TextInput(attrs={"class": "form-control"}),
         }
         """
-        
+
+
 class CategoryModelForm(forms.ModelForm):
     class Meta:
         model = Category

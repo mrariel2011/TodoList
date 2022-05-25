@@ -44,12 +44,12 @@ class TaskInsertView(LoginRequiredMixin, CreateView):
     def catList(self):
         cat = Category.objects.all
         return cat
-    
+
     def get_context_data(self, *args, **kwargs):
         context = super(TaskInsertView, self).get_context_data(*args, **kwargs)
         context['cat'] = self.catList()
         return context
-    
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
@@ -88,7 +88,8 @@ class ListTasksView(LoginRequiredMixin, ListView):
         item.save()
         messages.success(request, ("Task Atualizado!"))
         return HttpResponseRedirect("/tasks/")
-    
+
+
 class CategoryInsertView(LoginRequiredMixin, CreateView):
     model = Category
     form_class = CategoryModelForm
