@@ -8,6 +8,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:13.3-alpine
+        env:
+          POSTGRES_DB: db_todo_test
+          POSTGRES_PASSWORD: db_todo_test
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+
     steps:
       - uses: actions/checkout@v2
 
@@ -26,3 +40,9 @@ jobs:
 
       - name: Tests
         run: pytest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: db_todo_test
+          POSTGRES_DB: db_todo_test
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: 5432
