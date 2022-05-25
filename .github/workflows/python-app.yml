@@ -44,5 +44,5 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: db_todo_test
           POSTGRES_DB: db_todo_test
-          POSTGRES_HOST: postgres
+          POSTGRES_HOST: 127.0.0.1
           POSTGRES_PORT: 5432
